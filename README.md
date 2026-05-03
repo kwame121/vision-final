@@ -13,7 +13,7 @@ This repository implements conditional image synthesis from paired aerial *maps*
 
 Extract **`datasets.rar`** at the **repository root** so it restores the **`datasets/`** folder (rename or backup an existing folder first). You should see `datasets/maps/maps/train/` (paired JPG/PNG, left satellite | right map), `datasets/maps/maps/val/` or `datasets/maps/maps/val_select/`, and optionally `datasets/maps/maps/heldout_test/`.
 
-Extract **`checkpoints.rar`** at the **repository root** so it restores **`checkpoints/`**. This codebase saves **`{variant}_best.pt`** (best validation objective) and **`{variant}_latest.pt`** (final epoch). For sharper qualitative demos than the matched ten-epoch ablations, prefer **`checkpoints/proposed_latest.pt`** (archival proposed run ~90 epochs) over **`checkpoints_exp_ablation/proposed_bs8/proposed_best.pt`**.
+Extract **`checkpoints.rar`** at the **repository root** so it restores **`checkpoints/`**. The bundled long-run snapshots use explicit names: **`proposed_latest_epoch90.pt`** (best-looking ~90-epoch weights) and **`proposed_latest_epoch50.pt`** (mid-training reference). Routine training runs in this codebase also emit **`proposed_latest.pt`** / **`proposed_best.pt`**. For qualitative demos sharper than the ten-epoch matched ablations, prefer **`checkpoints/proposed_latest_epoch90.pt`** over **`checkpoints_exp_ablation/proposed_bs8/proposed_best.pt`**.
 
 When present in the archive, **`checkpoints/unet_latest.pt`** and **`checkpoints/baseline_latest.pt`** are the long-run structural and baseline generators.
 
@@ -54,10 +54,16 @@ python scripts/run_ablations.py --img-size 256
 
 ## Single-image inference
 
-Long-run **`checkpoints/`** (recommended for demos):
+Long-run **`checkpoints/`** (recommended—use **`proposed_latest_epoch90.pt`** for best visuals):
 
 ```bash
-python scripts/inference_single.py --input path/to/tile.png --resume-from checkpoints/proposed_latest.pt --variant proposed --format satellite
+python scripts/inference_single.py --input path/to/tile.png --resume-from checkpoints/proposed_latest_epoch90.pt --variant proposed --format satellite
+```
+
+Earlier archival snapshot (**`proposed_latest_epoch50.pt`**):
+
+```bash
+python scripts/inference_single.py --input path/to/tile.png --resume-from checkpoints/proposed_latest_epoch50.pt --variant proposed --format satellite
 ```
 
 Matched ten-epoch ablation checkpoint (comparison with report table):

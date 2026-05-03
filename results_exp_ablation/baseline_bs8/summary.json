@@ -1,0 +1,30 @@
+{
+  "run_name": "ablation_baseline_bs8_lr2e4",
+  "variant": "baseline",
+  "best_epoch": 5,
+  "best_val_loss_g": 7.786967882211657,
+  "best_metrics": {
+    "loss_d": 0.2604355805593988,
+    "loss_g": 7.786967882211657,
+    "loss_g_gan": 0.3816528387259746,
+    "loss_g_l1": 0.07405315012927505,
+    "loss_geom": 0.0,
+    "mae": 0.03702657507813495,
+    "psnr": 24.012091038883597,
+    "ssim": 0.5363900854751684,
+    "rotation_error": 0.01656663824763635
+  },
+  "checkpoints": {
+    "latest": "c:\\Users\\kwame\\vision-final\\checkpoints_exp_ablation\\baseline_bs8\\baseline_latest.pt",
+    "best": "c:\\Users\\kwame\\vision-final\\checkpoints_exp_ablation\\baseline_bs8\\baseline_best.pt"
+  },
+  "config": {
+    "learning_rate": 0.0002,
+    "lambda_l1": 100.0,
+    "lambda_geom": 0.0,
+    "use_geom_loss": false,
+    "use_skip_connections": false,
+    "batch_size": 8,
+    "img_size": 256
+  }
+}

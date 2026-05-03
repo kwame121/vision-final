@@ -1,0 +1,20 @@
+{
+  "run_name": "pix2pix_experiment",
+  "variant": "proposed",
+  "best_epoch": 50,
+  "best_val_loss_g": 6.123912348263506,
+  "best_metrics": {},
+  "checkpoints": {
+    "latest": "C:\\Users\\kwame\\vision-final\\checkpoints\\proposed_latest.pt",
+    "best": "C:\\Users\\kwame\\vision-final\\checkpoints\\proposed_best.pt"
+  },
+  "config": {
+    "learning_rate": 0.0002,
+    "lambda_l1": 100.0,
+    "lambda_geom": 10.0,
+    "use_geom_loss": true,
+    "use_skip_connections": true,
+    "batch_size": 4,
+    "img_size": 256
+  }
+}

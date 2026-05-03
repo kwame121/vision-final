@@ -1,0 +1,30 @@
+{
+  "run_name": "structural_unet_bs8_lr2e4",
+  "variant": "unet",
+  "best_epoch": 8,
+  "best_val_loss_g": 6.802010375803167,
+  "best_metrics": {
+    "loss_d": 0.28746384328061886,
+    "loss_g": 6.802010375803167,
+    "loss_g_gan": 0.14516607861627231,
+    "loss_g_l1": 0.06656844321299683,
+    "loss_geom": 0.0,
+    "mae": 0.03328422153876586,
+    "psnr": 24.213743123141203,
+    "ssim": 0.5936727575280449,
+    "rotation_error": 0.03656524194573814
+  },
+  "checkpoints": {
+    "latest": "c:\\Users\\kwame\\vision-final\\checkpoints_exp_ablation\\unet_bs8\\unet_latest.pt",
+    "best": "c:\\Users\\kwame\\vision-final\\checkpoints_exp_ablation\\unet_bs8\\unet_best.pt"
+  },
+  "config": {
+    "learning_rate": 0.0002,
+    "lambda_l1": 100.0,
+    "lambda_geom": 0.0,
+    "use_geom_loss": false,
+    "use_skip_connections": true,
+    "batch_size": 8,
+    "img_size": 256
+  }
+}

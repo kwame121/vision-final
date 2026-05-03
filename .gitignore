@@ -1,0 +1,54 @@
+# --- Secrets & local env ---
+.env
+.env.*
+!.env.example
+
+# --- Python bytecode ---
+**/__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# --- Archives (datasets/checkpoints belong on Drive, not git) ---
+*.rar
+*.zip
+*.7z
+
+# --- Scratch / smoke outputs ---
+/eval_test/
+/results_dump_smoke/
+
+# --- Optional / heavy / not part of lightweight clone ---
+/serve/
+/report-draft/
+/results_dump/
+/results_exp/
+/checkpoints_exp/
+/tmp_checkpoints/
+/tmp_results/
+/old_results/
+
+# --- Default run directories (structure only; artifacts local) ---
+/results/**
+!/results/.gitkeep
+/checkpoints/**
+!/checkpoints/.gitkeep
+
+# --- Matched ablation runs (artifacts from scripts/run_ablations.*) ---
+/checkpoints_exp_ablation/**
+!/checkpoints_exp_ablation/.gitkeep
+/results_exp_ablation/**
+!/results_exp_ablation/.gitkeep
+
+# --- Dataset tree: track layout + .gitkeep; ignore pixel files ---
+/datasets/**/*.jpg
+/datasets/**/*.jpeg
+/datasets/**/*.png
+/datasets/**/*.JPG
+/datasets/**/*.JPEG
+/datasets/**/*.PNG
+/datasets/**/*.webp
+/datasets/**/*.WEBP
+/datasets/**/*.bmp
+/datasets/**/*.tif
+/datasets/**/*.tiff

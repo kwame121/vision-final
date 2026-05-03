@@ -1,0 +1,30 @@
+{
+  "run_name": "pix2pix_experiment",
+  "variant": "proposed",
+  "best_epoch": 43,
+  "best_val_loss_g": 6.123912348263506,
+  "best_metrics": {
+    "loss_d": 0.31657513112261676,
+    "loss_g": 6.123912348263506,
+    "loss_g_gan": 0.5491588824037192,
+    "loss_g_l1": 0.05327009215303089,
+    "loss_geom": 0.024774426742848278,
+    "mae": 0.026635046090012875,
+    "psnr": 25.361039189324863,
+    "ssim": 0.7051626191191052,
+    "rotation_error": 0.02477442670235599
+  },
+  "checkpoints": {
+    "latest": "C:\\Users\\kwame\\vision-final\\checkpoints\\proposed_latest.pt",
+    "best": "C:\\Users\\kwame\\vision-final\\checkpoints\\proposed_best.pt"
+  },
+  "config": {
+    "learning_rate": 0.0002,
+    "lambda_l1": 100.0,
+    "lambda_geom": 10.0,
+    "use_geom_loss": true,
+    "use_skip_connections": true,
+    "batch_size": 8,
+    "img_size": 256
+  }
+}

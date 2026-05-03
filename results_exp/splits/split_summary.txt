@@ -1,0 +1,6 @@
+source_dir=c:\Users\kwame\vision-final\datasets\maps\maps\val
+seed=42
+total=1098
+heldout_count=219
+val_select_count=879
+heldout_ratio=0.2

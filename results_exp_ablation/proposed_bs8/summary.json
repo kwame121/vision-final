@@ -1,0 +1,30 @@
+{
+  "run_name": "proposed_bs8",
+  "variant": "proposed",
+  "best_epoch": 8,
+  "best_val_loss_g": 7.183571962876753,
+  "best_metrics": {
+    "loss_d": 0.30203691883520645,
+    "loss_g": 7.183571962876753,
+    "loss_g_gan": 0.379564368724823,
+    "loss_g_l1": 0.06611376458948309,
+    "loss_geom": 0.019263119275935672,
+    "mae": 0.033056882125410164,
+    "psnr": 24.33349247412248,
+    "ssim": 0.5964327142997221,
+    "rotation_error": 0.019263119250535966
+  },
+  "checkpoints": {
+    "latest": "c:\\Users\\kwame\\vision-final\\checkpoints_exp_ablation\\proposed_bs8\\proposed_latest.pt",
+    "best": "c:\\Users\\kwame\\vision-final\\checkpoints_exp_ablation\\proposed_bs8\\proposed_best.pt"
+  },
+  "config": {
+    "learning_rate": 0.0002,
+    "lambda_l1": 100.0,
+    "lambda_geom": 10.0,
+    "use_geom_loss": true,
+    "use_skip_connections": true,
+    "batch_size": 8,
+    "img_size": 256
+  }
+}

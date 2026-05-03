@@ -1,6 +1,19 @@
-# Vision final — Pix2Pix satellite-to-map
+# Synthetic cartography — satellite-to-map translation
 
-Lightweight clone: **code + empty directory layout** live in git; **datasets**, **weights**, and **run logs** stay local (or come from your Drive / RAR restore).
+**Kwame Adaboh** · ICS555 Computer Vision · Ashesi University (final project)
+
+This repository implements conditional image synthesis from paired aerial *maps* tiles (Pix2Pix-style): a PatchGAN-conditioned generator with a compact four-stage encoder–decoder and U-Net-style skips, trained with least-squares adversarial objectives and strong L1 reconstruction (weight 100). Three variants are reproduced: a **baseline** with null skip connections, a **structural** U-Net with skips but no rotation penalty, and **proposed** skips plus a rotation self-consistency loss (weight 10) to encourage alignment under ninety-degree rotations. Training and reporting use mean absolute error, peak SNR, a pooled structural-similarity surrogate, and a rotation-gap diagnostic; held-out aggregates in the written report are computed in a single pass after checkpoints are frozen and are not used for model selection.
+
+## Download artifacts
+
+| Archive | Link |
+| -------- | ---- |
+| **datasets.rar** | [Google Drive — datasets.rar](https://drive.google.com/file/d/1f381FIqZZhXgn1Lk3E-1j5xdHqDmjTcJ/view?usp=drive_link) |
+| **checkpoints.rar** | [Google Drive — checkpoints.rar](https://drive.google.com/file/d/1jW2hZFKNbgzN-OfNlayds8byuL-nlLYK/view?usp=drive_link) |
+
+Extract **`datasets.rar`** so training images live under `datasets/maps/maps/train/` (paired JPG/PNG in the standard left-satellite | right-map layout). Validation should be in `datasets/maps/maps/val_select/` if you use the held-out workflow, otherwise `datasets/maps/maps/val/`. Optionally add `datasets/maps/maps/heldout_test/` for a final eval only.
+
+Extract **`checkpoints.rar`** so that pretrained weights sit under `checkpoints_exp_ablation/baseline_bs8/`, `checkpoints_exp_ablation/unet_bs8/`, and `checkpoints_exp_ablation/proposed_bs8/` (or move the contained `*_best.pt` files to those paths). The commands below assume those locations.
 
 ## Setup
 
@@ -11,24 +24,9 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## Restore data and checkpoints (local only)
-
-1. Unpack your archives so **training tiles** sit under:
-
-   `datasets/maps/maps/train/` (JPG/PNG pairs as in the Pix2Pix *maps* layout)
-
-2. Put **validation** tiles under either:
-
-   - `datasets/maps/maps/val_select/` (preferred if you materialized a held-out split), or  
-   - `datasets/maps/maps/val/`
-
-3. Optional: `datasets/maps/maps/heldout_test/` for a one-shot final eval after training (see [scripts/EXPERIMENT_QUEUE_USAGE.md](scripts/EXPERIMENT_QUEUE_USAGE.md)).
-
-**Git** ignores image and checkpoint binaries under those trees; only `.gitkeep` placeholders define the folder layout.
-
 ## Run all three matched ablations (10 epochs, batch 8)
 
-From the **repository root**:
+From the repository root:
 
 ```bash
 python scripts/run_ablations.py
@@ -44,12 +42,9 @@ Or:
 bash scripts/run_ablations.sh
 ```
 
-This runs, in order, **baseline**, **unet** (structural), and **proposed** into:
+This runs, in order, **baseline**, **unet** (structural), and **proposed**, writing to `checkpoints_exp_ablation/{baseline_bs8,unet_bs8,proposed_bs8}/` and `results_exp_ablation/...`.
 
-- `checkpoints_exp_ablation/baseline_bs8/`, `unet_bs8/`, `proposed_bs8/`
-- `results_exp_ablation/baseline_bs8/`, …
-
-Pass-through args are supported (appended to each inner command), e.g.:
+Optional pass-through arguments (appended to each run), e.g.:
 
 ```bash
 python scripts/run_ablations.py --img-size 256
@@ -68,13 +63,6 @@ Use `--format paired` for the standard left-satellite / right-map training crop.
 ```bash
 python scripts/run_pipeline.py --mode train_eval --variant proposed --results-dir results --checkpoints-dir checkpoints
 ```
-
-## What is excluded from this repo
-
-- `serve/` — optional HTTP tile server (not required for training or `inference_single.py`).
-- `report-draft/` — LaTeX draft.
-- `results_dump/`, `results_exp/`, `checkpoints_exp/` — bulky experiment sandboxes.
-- `results/` and `checkpoints/` — default artifact dirs (kept empty in git via `.gitkeep`).
 
 ## Held-out split (optional)
 

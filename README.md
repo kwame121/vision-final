@@ -11,9 +11,11 @@ This repository implements conditional image synthesis from paired aerial *maps*
 | **datasets.rar** | [Google Drive — datasets.rar](https://drive.google.com/file/d/1f381FIqZZhXgn1Lk3E-1j5xdHqDmjTcJ/view?usp=drive_link) |
 | **checkpoints.rar** | [Google Drive — checkpoints.rar](https://drive.google.com/file/d/1jW2hZFKNbgzN-OfNlayds8byuL-nlLYK/view?usp=drive_link) |
 
-Extract **`datasets.rar`** so training images live under `datasets/maps/maps/train/` (paired JPG/PNG in the standard left-satellite | right-map layout). Validation should be in `datasets/maps/maps/val_select/` if you use the held-out workflow, otherwise `datasets/maps/maps/val/`. Optionally add `datasets/maps/maps/heldout_test/` for a final eval only.
+Extract **`datasets.rar`** at the **repository root** so it restores the **`datasets/`** folder (rename or backup an existing folder first). You should see `datasets/maps/maps/train/` (paired JPG/PNG, left satellite | right map), `datasets/maps/maps/val/` or `datasets/maps/maps/val_select/`, and optionally `datasets/maps/maps/heldout_test/`.
 
-Extract **`checkpoints.rar`** so that pretrained weights sit under `checkpoints_exp_ablation/baseline_bs8/`, `checkpoints_exp_ablation/unet_bs8/`, and `checkpoints_exp_ablation/proposed_bs8/` (or move the contained `*_best.pt` files to those paths). The commands below assume those locations.
+Extract **`checkpoints.rar`** at the **repository root** so it restores **`checkpoints/`**. This codebase saves **`{variant}_best.pt`** (best validation objective) and **`{variant}_latest.pt`** (final epoch). For sharper qualitative demos than the matched ten-epoch ablations, prefer **`checkpoints/proposed_latest.pt`** (archival proposed run ~90 epochs) over **`checkpoints_exp_ablation/proposed_bs8/proposed_best.pt`**.
+
+When present in the archive, **`checkpoints/unet_latest.pt`** and **`checkpoints/baseline_latest.pt`** are the long-run structural and baseline generators.
 
 ## Setup
 
@@ -42,7 +44,7 @@ Or:
 bash scripts/run_ablations.sh
 ```
 
-This runs, in order, **baseline**, **unet** (structural), and **proposed**, writing to `checkpoints_exp_ablation/{baseline_bs8,unet_bs8,proposed_bs8}/` and `results_exp_ablation/...`.
+This reruns matched **baseline**, **unet**, and **proposed** into **`checkpoints_exp_ablation/{baseline_bs8,unet_bs8,proposed_bs8}/`** and **`results_exp_ablation/...`** only—it does **not** overwrite **`checkpoints/`** from **`checkpoints.rar`** unless you change `--checkpoints-dir`.
 
 Optional pass-through arguments (appended to each run), e.g.:
 
@@ -52,9 +54,19 @@ python scripts/run_ablations.py --img-size 256
 
 ## Single-image inference
 
+Long-run **`checkpoints/`** (recommended for demos):
+
+```bash
+python scripts/inference_single.py --input path/to/tile.png --resume-from checkpoints/proposed_latest.pt --variant proposed --format satellite
+```
+
+Matched ten-epoch ablation checkpoint (comparison with report table):
+
 ```bash
 python scripts/inference_single.py --input path/to/tile.png --resume-from checkpoints_exp_ablation/proposed_bs8/proposed_best.pt --variant proposed --format satellite
 ```
+
+Other variants from **`checkpoints/`** when shipped: **`checkpoints/unet_latest.pt`** with **`--variant unet`**, **`checkpoints/baseline_latest.pt`** with **`--variant baseline`**.
 
 Use `--format paired` for the standard left-satellite / right-map training crop.
 
